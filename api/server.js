@@ -6,7 +6,6 @@ import { nanoid } from "nanoid";
 import jwt from "jsonwebtoken";
 import cors from "cors";
 import admin from "firebase-admin";
-import serviceAccountKey from "./addis-maed-firebase-adminsdk-eb0i6-b4e8a57415.json" assert { type: "json" };
 import { getAuth } from "firebase-admin/auth";
 import aws from "aws-sdk";
 
@@ -19,8 +18,15 @@ import Comment from "./Schema/Comment.js";
 const server = express();
 let PORT = 5000;
 
+const firebaseConfigBase64 = process.env.FIREBASE_CONFIG_BASE64;
+
+if (!firebaseConfigBase64) {
+  console.error("FIREBASE_CONFIG_BASE64 environment variable is not set.");
+  process.exit(1);
+}
+
 const firebaseConfig = JSON.parse(
-  Buffer.from(process.env.FIREBASE_CONFIG_BASE64, "base64").toString("utf8")
+  Buffer.from(firebaseConfigBase64, "base64").toString("utf8")
 );
 
 admin.initializeApp({
