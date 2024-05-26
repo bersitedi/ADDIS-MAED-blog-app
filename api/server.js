@@ -19,8 +19,12 @@ import Comment from "./Schema/Comment.js";
 const server = express();
 let PORT = 5000;
 
+const firebaseConfig = JSON.parse(
+  Buffer.from(process.env.FIREBASE_CONFIG_BASE64, "base64").toString("utf8")
+);
+
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccountKey),
+  credential: admin.credential.cert(firebaseConfig),
 });
 
 let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for email
