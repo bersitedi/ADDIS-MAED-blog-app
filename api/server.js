@@ -175,19 +175,22 @@ server.post("/signin", (req, res) => {
           if (err) {
             return res
               .status(403)
-              .json({ error: "Error occured while login please try again" });
+              .json({ error: "Error occurred while login please try again" });
           }
 
           if (!result) {
             return res.status(403).json({ error: "Incorrect password" });
           } else {
-            return res.status(200).json(formatDatatoSend(user));
+            // Include isAdmin property in the response
+            return res
+              .status(200)
+              .json({ ...formatDatatoSend(user), isAdmin: user.admin });
           }
         });
       } else {
         return res.status(403).json({
           error:
-            "Account was created using google. Try logging in with google.",
+            "Account was created using google. Try logging in with Google.",
         });
       }
     })
@@ -196,7 +199,6 @@ server.post("/signin", (req, res) => {
       return res.status(500).json({ error: err.message });
     });
 });
-
 server.post("/google-auth", async (req, res) => {
   let { access_token } = req.body;
 
@@ -204,37 +206,54 @@ server.post("/google-auth", async (req, res) => {
     .verifyIdToken(access_token)
     .then(async (decodedUser) => {
       let { email, name, picture } = decodedUser;
+
       picture = picture.replace("s96-c", "s384-c");
 
       let user = await User.findOne({ "personal_info.email": email })
         .select(
-          "personal_info.fullname personal_info.username personal_info.profile_img google_auth"
+          "personal_info.fullname personal_info.username personal_info.profile_img google_auth  admin"
         )
-        .then((u) => u || null)
+        .then((u) => {
+          return u || null;
+        })
         .catch((err) => {
           return res.status(500).json({ error: err.message });
         });
 
       if (user) {
-        // Login
+        // login
         if (!user.google_auth) {
           return res.status(403).json({
             error:
-              "This email was signed up without Google. Please log in with password to access the account",
+              "This email was signed up without google. Please log in with password to access the account",
           });
         }
-
-        return res.status(200).json(formatDatatoSend(user));
       } else {
-        return res.status(404).json({
-          error: "You need admin account to access to login",
+        // sign up
+
+        let username = await generateUsername(email);
+
+        user = new User({
+          personal_info: { fullname: name, email, username },
+          google_auth: true,
         });
+
+        await user
+          .save()
+          .then((u) => {
+            user = u;
+          })
+          .catch((err) => {
+            return res.status(500).json({ error: err.message });
+          });
       }
+
+      return res.status(200).json(formatDatatoSend(user));
     })
     .catch((err) => {
       return res.status(500).json({
         error:
-          "Failed to authenticate you with Google. Try with some other Google account",
+          "Failed to authenticate you with google. Try with some other google account",
       });
     });
 });
