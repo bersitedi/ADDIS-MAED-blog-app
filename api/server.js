@@ -37,7 +37,21 @@ let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for e
 let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
 
 server.use(express.json());
-server.use(cors());
+
+const allowedOrigins = ["https://addismaed.online", "http://localhost:5173"];
+
+server.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    exposedHeaders: ["x-totalcount", "x-totalpagecount"],
+  })
+);
 
 mongoose.connect(process.env.DB_URI, {
   autoIndex: true,
