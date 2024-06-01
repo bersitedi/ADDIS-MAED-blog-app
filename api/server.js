@@ -248,7 +248,9 @@ server.post("/google-auth", async (req, res) => {
           });
       }
 
-      return res.status(200).json(formatDatatoSend(user));
+      return res
+        .status(200)
+        .json({ ...formatDatatoSend(user), isAdmin: user.admin });
     })
     .catch((err) => {
       return res.status(500).json({
