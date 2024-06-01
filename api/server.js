@@ -201,7 +201,6 @@ server.post("/signin", (req, res) => {
               ...formatDatatoSend(user),
               isAdmin: user.admin,
             };
-            console.log("User authenticated, sending response:", formattedData);
             return res.status(200).json(formattedData);
           }
         });
@@ -270,10 +269,7 @@ server.post("/google-auth", async (req, res) => {
       }
 
       const formattedData = { ...formatDatatoSend(user), isAdmin: user.admin };
-      console.log(
-        "Google user authenticated, sending response:",
-        formattedData
-      );
+
       return res.status(200).json(formattedData);
     })
     .catch((err) => {
