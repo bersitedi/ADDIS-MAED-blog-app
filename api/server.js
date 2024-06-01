@@ -211,7 +211,7 @@ server.post("/google-auth", async (req, res) => {
 
       let user = await User.findOne({ "personal_info.email": email })
         .select(
-          "personal_info.fullname personal_info.username personal_info.profile_img google_auth  admin"
+          "personal_info.fullname personal_info.username personal_info.profile_img google_auth admin"
         )
         .then((u) => {
           return u || null;
