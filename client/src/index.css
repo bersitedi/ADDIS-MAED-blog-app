@@ -30,7 +30,36 @@
   ::selection {
     @apply bg-purple/30;
   }
+  .hero {
+    margin-top: 60px;
+  }
 
+  .heroTitles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Lora", serif;
+    color: #444;
+  }
+
+  .heroTitleSm {
+    position: absolute;
+    top: 18%;
+    font-size: 20px;
+  }
+
+  .heroTitleLg {
+    position: absolute;
+    top: 20%;
+    font-size: 100px;
+  }
+
+  .heroImg {
+    width: 100%;
+    height: 300px;
+    margin-top: 50px;
+    object-fit: cover;
+  }
   img {
     @apply w-full h-full object-cover;
   }

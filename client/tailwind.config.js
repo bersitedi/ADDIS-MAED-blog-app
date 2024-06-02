@@ -24,11 +24,11 @@ export default {
   plugins: [
     createThemes({
       light: {
-        white: "#FFFFFF",
+        white: "#F3F3F3",
         black: "#242424",
-        grey: "#F3F3F3",
+        grey: "#D4CFC5",
         "dark-grey": "#6B6B6B",
-        red: "#FF4E4E",
+        red: "#C7682D",
         transparent: "transparent",
         twitter: "#1DA1F2",
         purple: "#8B46FF",
