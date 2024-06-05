@@ -22,7 +22,7 @@ const BlogPostCard = ({ content, author, className }) => {
       <div className="w-full mb-4">
         <img src={banner} className="w-full h-56 object-cover" alt={title} />
       </div>
-      <div className="flex flex-col px-4">
+      <div className="flex flex-col px-2 md:px-0">
         <div className="flex gap-2 items-center mb-2">
           <img
             src={profile_img}
@@ -40,13 +40,13 @@ const BlogPostCard = ({ content, author, className }) => {
               <i className="fi fi-rr-heart text-xl"></i>
               {total_likes}
             </span>
-            <span className="bg-gray-200 rounded-full py-1 px-4">
+            <span className="bg-grey text-black rounded-full py-1 px-4">
               {tags[0]}
             </span>
           </div>
         </div>
         <h1 className="text-2xl font-bold mb-2">{title}</h1>
-        <p className="text-xl leading-4 mb-4 line-clamp-2">{des}</p>
+        <p className="text-xl leading-6 mb-4 line-clamp-2">{des}</p>
       </div>
     </Link>
   );

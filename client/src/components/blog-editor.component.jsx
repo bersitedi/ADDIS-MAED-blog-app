@@ -1,9 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import lightLogo from "../imgs/logo-light.png";
-import darkLogo from "../imgs/logo-dark.png";
+import darkLogo from "../imgs/darkLogo.jpg";
 import AnimationWrapper from "../common/page-animation";
 import lightBanner from "../imgs/blog banner light.png";
-import darkBanner from "../imgs/blog banner dark.png";
 import { uploadImage } from "../common/aws";
 import { useContext, useEffect } from "react";
 import { Toaster, toast } from "react-hot-toast";
@@ -11,7 +9,7 @@ import { EditorContext } from "../pages/editor.pages";
 import EditorJS from "@editorjs/editorjs";
 import { tools } from "./tools.component";
 import axios from "axios";
-import { ThemeContext, UserContext } from "../App";
+import { UserContext } from "../App";
 
 const BlogEditor = () => {
   let {
@@ -26,7 +24,6 @@ const BlogEditor = () => {
   let {
     userAuth: { access_token },
   } = useContext(UserContext);
-  let { theme } = useContext(ThemeContext);
   let { blog_id } = useParams();
 
   let navigate = useNavigate();
@@ -86,7 +83,7 @@ const BlogEditor = () => {
   const handleError = (e) => {
     let img = e.target;
 
-    img.src = theme == "light" ? lightBanner : darkBanner;
+    img.src = lightBanner;
   };
 
   const handlePublishEvent = () => {
@@ -172,8 +169,8 @@ const BlogEditor = () => {
   return (
     <>
       <nav className="navbar">
-        <Link to="/" className="flex-none w-10">
-          <img src={theme == "light" ? darkLogo : lightLogo} />
+        <Link to="/" className="flex-none w-20">
+          <img src={darkLogo} />
         </Link>
         <p className="max-md:hidden text-black line-clamp-1 w-full">
           {title.length ? title : "New Blog"}
@@ -192,7 +189,7 @@ const BlogEditor = () => {
       <AnimationWrapper>
         <section>
           <div className="mx-auto max-w-[900px] w-full">
-            <div className="relative aspect-video hover:opacity-80 bg-white border-4 border-grey">
+            <div className="relative aspect-video hover:opacity-80 bg-white border-2 border-grey">
               <label htmlFor="uploadBanner">
                 <img src={banner} className="z-20" onError={handleError} />
                 <input
@@ -208,7 +205,7 @@ const BlogEditor = () => {
             <textarea
               defaultValue={title}
               placeholder="Blog Title"
-              className="text-4xl font-medium w-full h-20 outline-none resize-none mt-10 leading-tight placeholder:opacity-40 bg-white"
+              className="text-4xl font-medium w-full h-20 outline-none resize-none mt-10 leading-tight placeholder:opacity-90 bg-white"
               onKeyDown={handleTitleKeyDown}
               onChange={handleTitleChange}
             ></textarea>

@@ -147,21 +147,26 @@ const BlogPage = () => {
                 <h1 className="text-2xl mt-14 mb-10 font-medium">
                   Similar Blogs
                 </h1>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {similarBlogs.map((blog, i) => {
+                    let {
+                      author: { personal_info },
+                    } = blog;
 
-                {similarBlogs.map((blog, i) => {
-                  let {
-                    author: { personal_info },
-                  } = blog;
-
-                  return (
-                    <AnimationWrapper
-                      key={i}
-                      transition={{ duration: 1, delay: i * 0.08 }}
-                    >
-                      <BlogPostCard content={blog} author={personal_info} />
-                    </AnimationWrapper>
-                  );
-                })}
+                    return (
+                      <AnimationWrapper
+                        key={i}
+                        transition={{ duration: 1, delay: i * 0.08 }}
+                      >
+                        <BlogPostCard
+                          content={blog}
+                          author={personal_info}
+                          className="h-72 md:h-80 lg:h-96"
+                        />
+                      </AnimationWrapper>
+                    );
+                  })}
+                </div>
               </>
             ) : (
               " "

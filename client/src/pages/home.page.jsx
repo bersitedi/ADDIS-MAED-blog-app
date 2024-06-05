@@ -15,33 +15,37 @@ import Contact from "../components/Contact";
 import Hero from "../components/hero";
 
 const HomePage = () => {
-  let [blogs, setBlog] = useState(null);
-  let [trendingBlogs, setTrendingBlog] = useState(null);
-  let [pageState, setPageState] = useState("home");
+  const [blogs, setBlog] = useState(null);
+  const [trendingBlogs, setTrendingBlog] = useState(null);
+  const [pageState, setPageState] = useState("home");
 
-  let categories = [
-    "programming",
-    "hollywood",
-    "film making",
-    "social media",
-    "cooking",
-    "tech",
-    "finance",
-    "food",
+  const categories = [
+    "BBQ and Grilling",
+    "Baking",
+    "Seafood",
+    "Smoothies",
+    "Vegan",
+    "Italian Cuisine",
+    "Lunch",
+    "Indian Cuisine",
+    "Dinner",
+    "Desserts",
+    "Snacks/Appetizers",
+    "Breakfast/Brunch",
   ];
 
   const fetchLatestBlogs = ({ page = 1 }) => {
     axios
       .post(import.meta.env.VITE_SERVER_DOMAIN + "/latest-blogs", { page })
       .then(async ({ data }) => {
-        let formatedData = await filterPaginationData({
+        let formattedData = await filterPaginationData({
           state: blogs,
           data: data.blogs,
           page,
           countRoute: "/all-latest-blogs-count",
         });
 
-        setBlog(formatedData);
+        setBlog(formattedData);
       })
       .catch((err) => {
         console.log(err);
@@ -55,7 +59,7 @@ const HomePage = () => {
         page,
       })
       .then(async ({ data }) => {
-        let formatedData = await filterPaginationData({
+        let formattedData = await filterPaginationData({
           state: blogs,
           data: data.blogs,
           page,
@@ -63,7 +67,7 @@ const HomePage = () => {
           data_to_send: { tag: pageState },
         });
 
-        setBlog(formatedData);
+        setBlog(formattedData);
       })
       .catch((err) => {
         console.log(err);
@@ -81,23 +85,23 @@ const HomePage = () => {
       });
   };
 
-  const loadBlogByCategory = (e) => {
-    let category = e.target.innerText.toLowerCase();
+  const loadBlogByCategory = (category) => {
+    const selectedCategory = category.toLowerCase();
 
     setBlog(null);
 
-    if (pageState == category) {
+    if (pageState === selectedCategory) {
       setPageState("home");
       return;
     }
 
-    setPageState(category);
+    setPageState(selectedCategory);
   };
 
   useEffect(() => {
     activeTabRef.current.click();
 
-    if (pageState == "home") {
+    if (pageState === "home") {
       fetchLatestBlogs({ page: 1 });
     } else {
       fetchBlogsByCategory({ page: 1 });
@@ -111,7 +115,7 @@ const HomePage = () => {
   return (
     <AnimationWrapper>
       <Hero />
-      <div className="h-cover flex justify-center gap-10 py-4 bg-black">
+      <div className="h-cover flex justify-center gap-10 py-4">
         <div className="w-full md:px-[7vw] py-4">
           <InPageNavigation
             routes={["home", "trending", "about", "contact"]}
@@ -126,7 +130,7 @@ const HomePage = () => {
                     <div className="flex flex-wrap -mx-2">
                       {blogs.results.map((blog, i) => {
                         return (
-                          <div key={i} className="w-full md:w-1/2  px-2 mb-4">
+                          <div key={i} className="w-full lg:w-1/2 px-2 mb-4">
                             <AnimationWrapper
                               transition={{ duration: 1, delay: i * 0.1 }}
                             >
@@ -146,7 +150,7 @@ const HomePage = () => {
                   <LoadMoreDataBtn
                     state={blogs}
                     fetchDataFun={
-                      pageState == "home"
+                      pageState === "home"
                         ? fetchLatestBlogs
                         : fetchBlogsByCategory
                     }
@@ -161,10 +165,7 @@ const HomePage = () => {
                     trendingBlogs.map((blog, i) => {
                       return (
                         <AnimationWrapper
-                          transition={{
-                            duration: 1,
-                            delay: i * 0.1,
-                          }}
+                          transition={{ duration: 1, delay: i * 0.1 }}
                           key={i}
                         >
                           <MinimalBlogPost blog={blog} index={i} />
@@ -182,14 +183,15 @@ const HomePage = () => {
           </InPageNavigation>
         </div>
         <div
-          className="min-w-[40%] lg:min-w-[400px] max-w-min h-full border-l border-grey pl-8 pt-10 max-md:hidden"
+          className="relative min-w-[40%] md:min-w-[400px] max-w-min h-full border-l border-grey pl-8 pt-[43px] pb-[45px] max-md:hidden"
           style={{
             backgroundImage: `url('https://images.unsplash.com/photo-1507273026339-31b655f3752d?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         >
-          <div className="flex flex-col gap-10">
+          <div className="absolute inset-0 bg-black opacity-70"></div>
+          <div className="relative flex flex-col gap-10">
             <div>
               <h1 className="font-medium text-xl text-white mb-8">
                 Stories from all interests
@@ -198,10 +200,12 @@ const HomePage = () => {
                 {categories.map((category, i) => {
                   return (
                     <button
-                      onClick={loadBlogByCategory}
+                      onClick={() => loadBlogByCategory(category)}
                       className={
                         "tag " +
-                        (pageState == category ? " bg-black text-white " : " ")
+                        (pageState === category.toLowerCase()
+                          ? "bg-brown text-white bg-opacity-40"
+                          : "")
                       }
                       key={i}
                     >
