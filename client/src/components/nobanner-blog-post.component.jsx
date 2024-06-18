@@ -22,7 +22,7 @@ const MinimalBlogPost = ({ blog, index }) => {
           <p className="line-clamp-1 text-white">
             {fullname} @{username}
           </p>
-          <p className="min-w-fit text-brown">{getDay(publishedAt)}</p>
+          <p className="min-w-fit text-grey">{getDay(publishedAt)}</p>
         </div>
 
         <h1 className="blog-title text-black md:text-white">{title}</h1>

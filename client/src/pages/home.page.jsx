@@ -185,7 +185,7 @@ const HomePage = () => {
         <div
           className="relative min-w-[40%] md:min-w-[400px] max-w-min h-full border-l border-grey pl-8 pt-[43px] pb-[45px] max-md:hidden"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1507273026339-31b655f3752d?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
+            backgroundImage: `url('https://images.unsplash.com/photo-1659285328424-f0ea9ad7e8fe?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -204,7 +204,7 @@ const HomePage = () => {
                       className={
                         "tag " +
                         (pageState === category.toLowerCase()
-                          ? "bg-brown text-white bg-opacity-40"
+                          ? "bg-black text-white bg-opacity-80"
                           : "")
                       }
                       key={i}

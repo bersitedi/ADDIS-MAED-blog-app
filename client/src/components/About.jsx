@@ -8,7 +8,7 @@ import SocialShareButtons from "./social-share-button";
 
 const AboutMe = () => {
   return (
-    <div className="flex flex-col lg:flex-row">
+    <div className="flex flex-col xl:flex-row">
       <div className="lg:flex-3 h-fit lg:m-5 p-8 lg:border-r lg:border-r-grey rounded-lg  items-center">
         <div className="flex flex-col items-center">
           <span className="m-2.5 p-1.5 w-4/5 border-t border-b border-[#a7a4a4] text-center font-sans text-xs leading-5 text-[#222222] font-semibold">
@@ -64,7 +64,7 @@ const AboutMe = () => {
           </div>
         </div>
       </div>
-      <div className="lg:flex-9 pl-8 pr-1 lg:mt-[40px] lg:ml-5">
+      <div className="xl:flex-9 xl:pl-8 pr-1 xl:m-5 xl:p-8 xl:ml-5">
         <div className="w-full mb-8">
           <h1 className="hidden lg:flex m-2.5 p-1.5 w-4/5 border-t border-b border-[#a7a4a4] text-center font-sans text-xl leading-5 text-[#222222] font-semibold">
             About Me

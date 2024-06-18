@@ -20,7 +20,11 @@ const BlogPostCard = ({ content, author, className }) => {
       className={`border-b border-gray-300 pb-5 mb-4 ${className}`}
     >
       <div className="w-full mb-4">
-        <img src={banner} className="w-full h-56 object-cover" alt={title} />
+        <img
+          src={banner}
+          className="w-full h-56 object-cover rounded-lg"
+          alt={title}
+        />
       </div>
       <div className="flex flex-col px-2 md:px-0">
         <div className="flex gap-2 items-center mb-2">
